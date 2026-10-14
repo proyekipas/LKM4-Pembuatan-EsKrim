@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LKM 4_Kelompok_Kelas</title>
+<style>
+:root{--ink:#16324a;--deep:#0b4f6c;--teal:#1a9bb8;--ice:#eaf6fc;--line:#b9d9e8;--leaf:#3c9d5d;--warn:#c2410c;--bg:#f3f9fc}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:12px;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;overflow-x:hidden}
+.wrap{width:100%;max-width:700px;margin:0 auto}
+.head{background:linear-gradient(135deg,#0b4f6c,#1a9bb8);color:#fff;border-radius:16px;padding:18px;text-align:center}
+.head h1{margin:0;font-size:1.35rem;letter-spacing:.5px}
+.head p{margin:4px 0 0;font-size:.95rem;opacity:.95}
+.meter{position:sticky;top:0;z-index:20;background:#fff;border:2px solid var(--line);border-radius:14px;margin:10px 0;padding:8px 12px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 8px rgba(11,79,108,.12)}
+.meter svg{width:64px;height:72px;flex:none}
+.mt{flex:1;min-width:0}
+.mt b{font-size:.95rem}
+.bar{height:12px;background:#dcebf3;border-radius:8px;overflow:hidden;margin:5px 0}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1a9bb8,#9bdcf5);transition:width .3s}
+.mt small{display:block;color:#476a82;font-size:.82rem}
+.save{font-size:.75rem;color:var(--leaf)}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;margin:14px 0;overflow:hidden}
+section>h2{margin:0;padding:10px 14px;font-size:1.02rem;background:var(--deep);color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.body{padding:14px}
+h3{margin:14px 0 6px;font-size:1rem;color:var(--deep)}
+h3:first-child{margin-top:0}
+.case{background:var(--ice);border-left:5px solid var(--teal);padding:10px 12px;border-radius:8px;font-style:italic;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ol{margin:6px 0;padding-left:22px}
+li{margin:4px 0}
+.q{margin:10px 0 4px;font-weight:600}
+.lbl{display:block;font-size:.85rem;font-weight:700;color:var(--deep);margin:8px 0 3px}
+.f{display:block;width:100%;min-height:44px;padding:9px 11px;border:1.5px solid #8fbfd4;border-radius:10px;background:#fbfeff;color:var(--ink);font:inherit;height:auto;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;outline:none}
+.f:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,155,184,.2)}
+.f:empty::before{content:attr(data-ph);color:#8aa5b5;pointer-events:none}
+input.f{min-height:44px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.mem{display:flex;gap:8px;align-items:flex-end;margin-top:8px}
+.mem>div{flex:1;min-width:0}
+.btn{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer;background:var(--teal);color:#fff}
+.btn.sec{background:#e2f1f8;color:var(--deep)}
+.btn.del{background:#fde8e1;color:var(--warn);padding:7px 11px;font-size:.88rem}
+.btn.rst{background:#fff;color:var(--warn);border:1.5px solid var(--warn)}
+.btn:active{transform:scale(.98)}
+.rowc{border:1.5px solid var(--line);border-radius:12px;padding:10px;margin:10px 0;background:#f8fcfe;break-inside:avoid;page-break-inside:avoid}
+.rowh{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--deep)}
+.hint{font-size:.85rem;color:#476a82;margin:4px 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 30px}
+.actions .btn{flex:1 1 150px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.on{display:flex}
+.modal div.box{background:#fff;border-radius:14px;padding:18px;max-width:420px;width:100%}
+.modal h3{margin-top:0}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:8px 0}
+.ph{position:relative;border:1.5px solid var(--line);border-radius:10px;padding:6px;background:#fff;break-inside:avoid;page-break-inside:avoid}
+.ph img{display:block;width:100%;height:auto;border-radius:6px}
+.ph .btn{position:absolute;top:10px;right:10px}
+.sp{display:none}
+@media (max-width:480px){.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.mem{flex-wrap:wrap}}
+@page{size:A4;margin:10mm}
+@media print{
+ body{background:#fff;padding:0;font-size:12pt}
+ .noprint,.meter,.modal{display:none!important}
+ section{break-inside:auto;border-color:#999}
+ section>h2{break-after:avoid}
+ .f{background:#fff;border-color:#777;overflow:visible;height:auto!important;max-height:none!important}
+ .f:empty::before{content:""}
+ .sp{display:inline}
+ .ph img{max-height:90mm;object-fit:contain;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+ <div class="head"><h1>LEMBAR KERJA MURID (LKM)</h1><p>Proyek IPAS – Kelas X SMK</p><p>Topik: Zat dan Perubahannya | Model: Problem Based Learning</p></div>
+
+ <div class="meter noprint" aria-live="polite">
+  <svg id="plant" viewBox="0 0 64 72" aria-hidden="true">
+   <polygon points="19,38 45,38 32,70" fill="#e0a458"/><path d="M24 44l14 20M30 40l10 14M20 40l20 24M38 40L26 62M44 40L33 66" stroke="#b97d2f" stroke-width="1" fill="none"/>
+   <g id="s0"><ellipse cx="32" cy="38" rx="13" ry="3.5" fill="#cfe8f5" stroke="#8fbfd4"/></g>
+   <g id="s1" style="display:none"><circle cx="32" cy="31" r="12" fill="#e3f4fb" stroke="#8fbfd4"/><path d="M26 30l4 4M36 28l-3 5" stroke="#8fbfd4" stroke-width="1.5"/></g>
+   <g id="s2" style="display:none"><circle cx="32" cy="32" r="12.5" fill="#f8bbd0"/><circle cx="32" cy="20" r="10.5" fill="#fff8e1" stroke="#e6d9a8"/></g>
+   <g id="s3" style="display:none"><circle cx="32" cy="32" r="12.5" fill="#f8bbd0"/><circle cx="32" cy="20" r="10.5" fill="#fff8e1" stroke="#e6d9a8"/><circle cx="32" cy="10" r="8.5" fill="#b9ecd6"/></g>
+   <g id="s4" style="display:none"><circle cx="32" cy="32" r="12.5" fill="#f8bbd0"/><circle cx="32" cy="20" r="10.5" fill="#fff8e1" stroke="#e6d9a8"/><circle cx="32" cy="10" r="8.5" fill="#b9ecd6"/><circle cx="32" cy="2.5" r="3" fill="#e53935"/><g fill="#1a9bb8"><path d="M8 12l2 4 4 2-4 2-2 4-2-4-4-2 4-2z"/><path d="M54 24l2 4 4 2-4 2-2 4-2-4-4-2 4-2z"/></g></g>
+  </svg>
+  <div class="mt"><b>Meteran Pembekuan Es Krim: <span id="pct">0%</span></b><div class="bar"><i id="fill"></i></div><small id="ratio">0 dari 0 bagian terisi</small><small id="stage">Adonan masih cair 🥛</small><span class="save" id="saved"></span></div>
+ </div>
+
+ <section><h2>IDENTITAS KELOMPOK</h2><div class="body">
+  <div class="g2">
+   <div><span class="lbl">Nama Ketua</span><div class="f" contenteditable="true" data-single="1" data-ph="Nama ketua…" data-id="ketua"></div></div>
+   <div><span class="lbl">Kelas</span><div class="f" contenteditable="true" data-single="1" data-ph="Contoh: X-2" data-id="kelas"></div></div>
+   <div><span class="lbl">Tanggal</span><input class="f" type="date" data-id="tanggal"></div>
+   <div><span class="lbl">Kelompok</span><div class="f" contenteditable="true" data-single="1" data-ph="Contoh: 3" data-id="kelompok"></div></div>
+  </div>
+  <span class="lbl" style="margin-top:14px">Anggota Kelompok</span>
+  <div id="members"></div>
+  <button class="btn sec noprint" id="addMem" style="margin-top:10px">+ Tambah Anggota</button>
+ </div></section>
+
+ <section><h2>BAGIAN A – FASE 1: Orientasi pada Masalah</h2><div class="body">
+  <p><b>📖 Baca studi kasus berikut dengan seksama!</b></p>
+  <div class="case"><b style="font-style:normal">STUDI KASUS:</b><br>Setiap sore, Daeng Sangkala berjualan es krim potong tradisional di kawasan Pantai Losari, Makassar. Untuk membuat es krimnya cepat membeku, ia selalu memasukkan wadah berisi adonan susu ke dalam ember berisi es batu yang sudah ditaburi banyak garam kasar, lalu mengocoknya berulang-ulang. Suatu sore, cucunya, Ammang, ikut membantu berjualan dan memperhatikan kebiasaan itu. Ammang bertanya, "Kenapa Daeng selalu menaburkan garam ke es batu? Bukankah garam itu tidak dicampurkan ke adonan es krimnya?" Daeng Sangkala hanya tersenyum dan menjawab bahwa itu adalah kebiasaan turun-temurun dari orang tuanya agar es krimnya cepat jadi dan teksturnya lembut, tanpa pernah tahu alasan ilmiah di baliknya.</div>
+  <h3>A.1 Pertanyaan Orientasi</h3>
+  <p class="q">1. Mengapa penambahan garam pada es batu dapat membuat campuran adonan es krim lebih cepat membeku, padahal garam tersebut tidak dicampurkan langsung ke dalam adonan es krim?</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="a1"></div>
+  <p class="q">2. Apa yang terjadi pada titik beku es batu ketika dicampur dengan garam?</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="a2"></div>
+  <p class="q">3. Bagaimana hubungan antara jumlah (konsentrasi) garam yang ditambahkan dengan kecepatan dan tekstur es krim yang dihasilkan?</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="a3"></div>
+ </div></section>
+
+ <section><h2>BAGIAN B – FASE 2: Mengorganisasikan Rencana Penyelidikan</h2><div class="body">
+  <h3>B.1 Pembagian Tugas Kelompok</h3>
+  <p>Pastikan setiap anggota kelompok menjalankan tugasnya masing-masing agar percobaan berjalan lancar:</p>
+  <ol><li>Juru Ukur &amp; Penyiap Bahan: menakar dan menyiapkan seluruh bahan (es batu, garam, adonan susu/santan) sesuai variasi perlakuan kelompok.</li>
+  <li>Pelaksana Eksperimen: melaksanakan proses pengocokan/pembekuan adonan dan mengamati perubahan yang terjadi selama percobaan.</li>
+  <li>Pencatat &amp; Juru Bicara: mencatat waktu, suhu (jika ada), dan tekstur hasil pengamatan pada tabel, serta menjadi perwakilan kelompok saat presentasi.</li></ol>
+  <span class="lbl">Variasi garam kelompok kami: (… sendok makan)</span>
+  <div class="f" contenteditable="true" data-single="1" data-ph="Isi jumlah, contoh: 3" data-f="b_variasi"></div>
+  <p class="q">Prediksi kelompok: Menurut prediksi kelompokmu, apa yang akan terjadi pada waktu pembekuan jika garam yang digunakan diperbanyak?</p>
+  <div class="f" contenteditable="true" data-ph="Tulis prediksi kelompok…" data-f="b_prediksi"></div>
+ </div></section>
+
+ <section><h2>BAGIAN C – FASE 3: Membimbing Penyelidikan (Observasi Lapangan)</h2><div class="body">
+  <h3>C.1 Alat dan Bahan</h3>
+  <ol><li>Es batu secukupnya</li><li>Garam kasar (sesuai variasi kelompok)</li><li>Susu cair UHT ± 100 ml</li><li>Gula pasir 1–2 sendok makan</li><li>Kaleng biskuit dan baskom sedang</li><li>Sarung tangan/lap</li><li>Termometer (jika tersedia) dan stopwatch/jam tangan/HP</li></ol>
+  <h3>C.2 Langkah Kerja</h3>
+  <ol><li>Masukkan susu UHT, gula, dan vanili (jika ada) ke dalam kaleng biskuit, lalu tutup rapat sambil mengeluarkan udaranya.</li>
+  <li>Masukkan es batu dan garam (sesuai variasi kelompok) ke dalam baskom.</li>
+  <li>Masukkan kaleng ke dalam baskom, lalu putar kaleng secara perlahan.</li>
+  <li>Putar kaleng secara terus-menerus dan catat waktu mulai pengocokan.</li>
+  <li>Amati perubahan pada adonan setiap beberapa menit. Catat waktu ketika adonan mulai mengental dan saat benar-benar membeku.</li>
+  <li>Ukur suhu campuran es dan garam (jika tersedia termometer), lalu catat tekstur akhir es krim yang dihasilkan.</li></ol>
+  <h3>C.3 Tabel Hasil Pengamatan</h3>
+  <p class="hint noprint">Tambahkan baris untuk setiap variasi garam / percobaan yang kelompokmu amati.</p>
+  <div id="rows"></div>
+  <button class="btn sec noprint" id="addRow">+ Tambah Baris / Subjek Identifikasi</button>
+ </div></section>
+
+ <section><h2>BAGIAN D – FASE 4: Menyajikan Hasil Karya</h2><div class="body">
+  <h3>D.1 Menyusun Hasil Diskusi</h3>
+  <p>Susunlah hasil diskusi kelompok kalian dalam bentuk presentasi singkat yang memuat:</p>
+  <p class="q">1. Bagaimana tekstur es krim kelompokmu jika dibandingkan dengan hasil kelompok lain yang menggunakan variasi garam berbeda?</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="d1"></div>
+  <span class="lbl">📷 Foto hasil es krim kelompok (ikut tercetak di PDF)</span>
+  <div class="photos" id="photos"></div>
+  <label class="btn sec noprint" style="display:inline-block">📷 Tambah Foto<input type="file" id="photoIn" accept="image/*" multiple hidden></label>
+  <span class="hint noprint">Maksimal 6 foto. Foto otomatis dikecilkan agar tersimpan di browser.</span>
+  <p class="q">2. Apakah ada hubungan antara jumlah garam yang digunakan dengan lama waktu pembekuan? Jelaskan!</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="d2"></div>
+  <p class="q">3. Satu kesimpulan utama</p>
+  <div class="f" contenteditable="true" data-ph="Tulis kesimpulan utama…" data-f="d3"></div>
+ </div></section>
+
+ <section><h2>BAGIAN E – FASE 5: Evaluasi Proses Pemecahan Masalah</h2><div class="body">
+  <h3>E.1 Evaluasi Kelompok:</h3>
+  <p class="q">1. Jelaskan secara ilmiah mengapa garam dapat menurunkan titik beku es batu!</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="e1"></div>
+  <p class="q">2. Bagaimana kelompokmu akan menjawab pertanyaan Ammang kepada Daeng Sangkala tentang alasan menaburkan garam pada es batunya?</p>
+  <div class="f" contenteditable="true" data-ph="Tulis jawaban kelompok…" data-f="e2"></div>
+ </div></section>
+
+ <div class="actions noprint">
+  <button class="btn" id="btnTxt">⬇ Unduh .txt</button>
+  <button class="btn" id="btnPrint" style="background:var(--deep)">🖨 Cetak / Simpan PDF</button>
+  <button class="btn rst" id="btnReset">↺ Reset</button>
+ </div>
+</div>
+
+<div class="modal" id="iosModal"><div class="box"><h3>Panduan Simpan PDF (iPhone/iPad)</h3>
+ <ol><li>Jika dialog cetak tidak muncul, ketuk ikon <b>Bagikan</b> (kotak berpanah) di Safari.</li><li>Pilih <b>Cetak</b> (Print).</li><li>Di pratinjau, <b>cubit/zoom-out</b> halaman untuk mengubahnya menjadi PDF, lalu <b>Bagikan → Simpan ke Berkas</b>.</li></ol>
+ <button class="btn" id="iosGo">Lanjut Cetak</button> <button class="btn sec" id="iosClose">Tutup</button></div></div>
+
+<script>
+(function(){
+var KEY='lkm4_es_krim_garam_v1';
+var COLS=['Variasi Garam','Waktu Mulai','Waktu Beku','Lama Pembekuan','Suhu Campuran (jika ada)','Tekstur Es Krim'];
+var FKEYS=['a1','a2','a3','b_variasi','b_prediksi','d1','d2','d3','e1','e2'];
+var S=load();
+function blank(){return{id:{ketua:'',kelas:'',tanggal:'',kelompok:''},mem:['',''],f:{},rows:[newRow()],photos:[]}}
+function newRow(){return{v:['','','','','','']}}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.id&&d.mem&&d.f&&d.rows&&d.rows.length){if(!d.photos)d.photos=[];return d}}catch(e){}return blank()}
+var tmr;function save(){clearTimeout(tmr);tmr=setTimeout(flush,300)}
+function flush(){try{localStorage.setItem(KEY,JSON.stringify(S));$('saved').textContent='✓ Tersimpan otomatis'}catch(e){$('saved').textContent='⚠ Penyimpanan browser tidak tersedia'}}
+function $(i){return document.getElementById(i)}
+function txt(el){return (el.innerText||el.textContent||'').replace(/\u00a0/g,' ').replace(/\n+$/,'')}
+function wire(el,get,set){
+ if(el.tagName==='INPUT'){el.value=get()||'';el.addEventListener('input',function(){set(el.value);upd()});return el}
+ el.textContent=get()||'';
+ el.addEventListener('input',function(){if(!el.textContent.trim()&&/<br>|^$/.test(el.innerHTML))el.innerHTML='';set(txt(el));upd()});
+ el.addEventListener('paste',function(e){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData('text');if(el.dataset.single)t=t.replace(/\s*\n\s*/g,' ');document.execCommand('insertText',false,t)});
+ if(el.dataset.single)el.addEventListener('keydown',function(e){if(e.key==='Enter')e.preventDefault()});
+ return el}
+function mkf(val,ph,single,set){var d=document.createElement('div');d.className='f';d.contentEditable='true';d.dataset.ph=ph;if(single)d.dataset.single='1';d.textContent=val||'';return wire(d,function(){return val},set)}
+function bind(){
+ document.querySelectorAll('[data-id]').forEach(function(el){var k=el.dataset.id;wire(el,function(){return S.id[k]},function(v){S.id[k]=v;save()})});
+ document.querySelectorAll('[data-f]').forEach(function(el){var k=el.dataset.f;wire(el,function(){return S.f[k]},function(v){S.f[k]=v;save()})});
+}
+function renderMem(){var box=$('members');box.innerHTML='';
+ S.mem.forEach(function(v,i){var r=document.createElement('div');r.className='mem';var c=document.createElement('div');
+  var l=document.createElement('span');l.className='lbl';l.textContent='Anggota '+(i+2);c.appendChild(l);
+  c.appendChild(mkf(v,'Nama anggota…',true,function(x){S.mem[i]=x;save();upd()}));r.appendChild(c);
+  var b=document.createElement('button');b.className='btn del noprint';b.textContent='Hapus';b.onclick=function(){S.mem.splice(i,1);renderMem();save();upd()};r.appendChild(b);box.appendChild(r)});}
+function renderRows(){var box=$('rows');box.innerHTML='';
+ S.rows.forEach(function(row,i){var c=document.createElement('div');c.className='rowc';
+  var h=document.createElement('div');h.className='rowh';h.innerHTML='<span>Pengamatan '+(i+1)+'</span>';
+  var b=document.createElement('button');b.className='btn del noprint';b.textContent='Hapus';
+  b.onclick=function(){if(S.rows.length>1)S.rows.splice(i,1);else S.rows[0]=newRow();renderRows();save();upd()};h.appendChild(b);c.appendChild(h);
+  var g=document.createElement('div');g.className='g3';
+  COLS.forEach(function(n,j){var w=document.createElement('div');var l=document.createElement('span');l.className='lbl';l.textContent=n;w.appendChild(l);
+   w.appendChild(mkf(row.v[j],'Isi…',false,function(x){row.v[j]=x;save();upd()}));g.appendChild(w)});
+  c.appendChild(g);box.appendChild(c)})}
+function renderPhotos(){var box=$('photos');box.innerHTML='';
+ S.photos.forEach(function(u,i){var d=document.createElement('div');d.className='ph';var im=new Image();im.src=u;im.alt='Foto hasil kelompok '+(i+1);d.appendChild(im);
+  var b=document.createElement('button');b.className='btn del noprint';b.textContent='Hapus';b.onclick=function(){S.photos.splice(i,1);renderPhotos();save();upd()};d.appendChild(b);box.appendChild(d)})}
+function shrink(file,cb){var fr=new FileReader();fr.onerror=function(){cb(null)};fr.onload=function(){var im=new Image();im.onerror=function(){cb(null)};im.onload=function(){
+ var M=1000,w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,M/Math.max(w,h)),cv=document.createElement('canvas');cv.width=Math.round(w*k);cv.height=Math.round(h*k);
+ var x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);x.drawImage(im,0,0,cv.width,cv.height);cb(cv.toDataURL('image/jpeg',0.75))};im.src=fr.result};fr.readAsDataURL(file)}
+function addPhotos(files){var list=Array.prototype.slice.call(files),bad=0,full=false;
+ (function next(){if(!list.length){renderPhotos();save();upd();if(bad)alert('Ada foto yang tidak bisa dibaca (format tidak didukung). Coba foto JPG/PNG.');if(full)alert('Maksimal 6 foto.');return}
+  if(S.photos.length>=6){full=true;list=[];return next()}
+  shrink(list.shift(),function(u){if(u)S.photos.push(u);else bad++;next()})})()}
+$('photoIn').onchange=function(e){addPhotos(e.target.files);e.target.value=''};
+function stats(){var tot=0,ok=0;function c(v){tot++;if(v&&String(v).trim())ok++}
+ ['ketua','kelas','tanggal','kelompok'].forEach(function(k){c(S.id[k])});
+ S.mem.forEach(c);FKEYS.forEach(function(k){c(S.f[k])});
+ S.rows.forEach(function(r){r.v.forEach(c)});c(S.photos.length?'1':'');return{tot:tot,ok:ok}}
+function upd(){var s=stats(),p=s.tot?Math.round(s.ok/s.tot*100):0;
+ $('pct').textContent=p+'%';$('fill').style.width=p+'%';$('ratio').textContent=s.ok+' dari '+s.tot+' bagian terisi';
+ var st=p>=100?4:p>=67?3:p>=34?2:p>0?1:0;
+ for(var i=0;i<5;i++)$('s'+i).style.display=(i===st||(i===0&&st===0))?'':'none';
+ $('stage').textContent=['Adonan masih cair 🥛','Adonan mulai mengental 🧊','Es krim mulai membeku 🍦','Hampir beku sempurna ❄️','Es krim jadi! 🍨✨'][st];
+ $('s0').style.display=st===0?'':'none';}
+function nm(){function cl(v,d){v=(v||'').trim().replace(/[\/\\:*?"<>|]/g,'-').replace(/[\u0000-\u001f]/g,'').replace(/\s+/g,' ');return v||d}
+ return 'LKM 4_'+cl(S.id.kelompok,'Kelompok')+'_'+cl(S.id.kelas,'Kelas')}
+function dl(name,text){var b=new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)}
+function exportTxt(){var L=[],f=function(k){return S.f[k]||'-'};
+ L.push('LEMBAR KERJA MURID (LKM) - Proyek IPAS Kelas X SMK','Topik: Zat dan Perubahannya | Model: Problem Based Learning','');
+ L.push('IDENTITAS','Nama Ketua : '+(S.id.ketua||'-'),'Kelas      : '+(S.id.kelas||'-'),'Tanggal    : '+(S.id.tanggal||'-'),'Kelompok   : '+(S.id.kelompok||'-'));
+ S.mem.forEach(function(m,i){L.push('Anggota '+(i+2)+'   : '+(m||'-'))});
+ L.push('','BAGIAN A - FASE 1: Orientasi pada Masalah','A.1 Pertanyaan Orientasi',
+  '1. Mengapa penambahan garam pada es batu dapat membuat campuran adonan es krim lebih cepat membeku, padahal garam tersebut tidak dicampurkan langsung ke dalam adonan es krim?','Jawab: '+f('a1'),
+  '2. Apa yang terjadi pada titik beku es batu ketika dicampur dengan garam?','Jawab: '+f('a2'),
+  '3. Bagaimana hubungan antara jumlah (konsentrasi) garam yang ditambahkan dengan kecepatan dan tekstur es krim yang dihasilkan?','Jawab: '+f('a3'),'',
+  'BAGIAN B - FASE 2: Mengorganisasikan Rencana Penyelidikan','Variasi garam kelompok kami: '+f('b_variasi')+' sendok makan','Prediksi kelompok (apa yang terjadi pada waktu pembekuan jika garam diperbanyak?):',f('b_prediksi'),'',
+  'BAGIAN C - FASE 3: Membimbing Penyelidikan','C.3 Tabel Hasil Pengamatan');
+ S.rows.forEach(function(r,i){L.push('Pengamatan '+(i+1));COLS.forEach(function(n,j){L.push('  '+n+': '+(r.v[j]||'-'))})});
+ L.push('','BAGIAN D - FASE 4: Menyajikan Hasil Karya','1. Perbandingan tekstur dengan kelompok lain:',f('d1'),'   Foto terlampir: '+S.photos.length+' (foto tidak termasuk dalam file .txt; gunakan Cetak/Simpan PDF)','2. Hubungan jumlah garam dengan lama pembekuan:',f('d2'),'3. Satu kesimpulan utama:',f('d3'),'',
+  'BAGIAN E - FASE 5: Evaluasi Proses Pemecahan Masalah','1. Penjelasan ilmiah garam menurunkan titik beku es batu:',f('e1'),'2. Jawaban untuk pertanyaan Ammang kepada Daeng Sangkala:',f('e2'));
+ dl(nm()+'.txt',L.join('\r\n'))}
+var isIOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+var oldTitle=document.title;
+function doPrint(){flush();document.body.classList.add('printing');
+ requestAnimationFrame(function(){requestAnimationFrame(function(){oldTitle=document.title;document.title=nm();window.print();
+  setTimeout(function(){document.title=oldTitle},1000)})})}
+window.addEventListener('beforeprint',function(){document.title=nm()});
+window.addEventListener('afterprint',function(){document.body.classList.remove('printing');document.title=oldTitle});
+$('btnPrint').onclick=function(){if(isIOS)$('iosModal').classList.add('on');else doPrint()};
+$('iosGo').onclick=function(){$('iosModal').classList.remove('on');doPrint()};
+$('iosClose').onclick=function(){$('iosModal').classList.remove('on')};
+$('btnTxt').onclick=exportTxt;
+$('addMem').onclick=function(){S.mem.push('');renderMem();save();upd();var n=$('members').querySelectorAll('.f');n[n.length-1].focus()};
+$('addRow').onclick=function(){S.rows.push(newRow());renderRows();save();upd()};
+$('btnReset').onclick=function(){if(confirm('Hapus SEMUA isian dan kembalikan tabel ke kondisi awal? Tindakan ini tidak dapat dibatalkan.')){try{localStorage.removeItem(KEY)}catch(e){}S=blank();document.querySelectorAll('[data-id],[data-f]').forEach(function(e){if(e.tagName==='INPUT')e.value='';else e.textContent=''});renderMem();renderRows();renderPhotos();$('saved').textContent='';upd()}};
+window.addEventListener('pagehide',flush);document.addEventListener('visibilitychange',function(){if(document.hidden)flush()});
+bind();renderMem();renderRows();renderPhotos();upd();
+})();
+</script>
+</body>
+</html>
